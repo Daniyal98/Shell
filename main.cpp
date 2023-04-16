@@ -3,7 +3,9 @@
 #include <sstream> 
 #include <string>
 #include <unistd.h>
+#include <filesystem>
 using namespace std;
+namespace fs = std::filesystem;
 
 vector<string> tokenize(string command)
 {
@@ -34,6 +36,12 @@ void present_working_directory()
     cout << dir << endl;
 }
 
+void list_directories()
+{
+    for (const auto & entry : fs::directory_iterator("."))
+        std::cout << entry.path() << std::endl;
+}
+
 int main()
 {
     while (1)
@@ -50,6 +58,11 @@ int main()
         else if (tokens[0] == "pwd")
         {
             present_working_directory();
+        }
+
+        else if (tokens[0] == "ls")
+        {
+            list_directories();
         }
     }
 }
